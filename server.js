@@ -69,6 +69,7 @@ function onError(error) {
 /**
  * Get port from environment and store in Express.
 */
+var HOST = '3.17.63.205'
 var port = normalizePort(process.env.PORT || '80')
 app.set('port', port)
 
@@ -123,6 +124,6 @@ app.get('/', (req, res) => {
     res.end()
   })
 
-server.listen(port, () => console.log('Your server is running on Port ' + port))
+server.listen(port, HOST, () => console.log('Your server is running on Port ' + port))
 // server.on('error', onError)
 // server.on('listening', onListening)
