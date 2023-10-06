@@ -78,7 +78,7 @@ app.set('port', port)
 var server = http.createServer(app)
 
 // define constants
-const OPENAI_API_KEY = API_KEY
+const OPENAI_API_KEY = process.env.API_KEY
 const num_of_answers = 3
 
 // POST request to OpenAI
