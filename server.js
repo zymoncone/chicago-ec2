@@ -123,6 +123,6 @@ app.get('/', (req, res) => {
     res.end()
   })
 
-server.listen(port, () => console.log('Your server is running on Port ' + port))
+server.listen(port, "172.31.32.145", () => console.log('Your server is running on Port ' + port))
 server.on('error', onError)
 server.on('listening', onListening)
