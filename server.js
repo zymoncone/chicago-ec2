@@ -69,7 +69,7 @@ function onError(error) {
 /**
  * Get port from environment and store in Express.
 */
-var port = normalizePort(process.env.PORT || '8000')
+var port = normalizePort(process.env.PORT || '80')
 app.set('port', port)
 
 /**
@@ -119,7 +119,8 @@ app.post('/passwords', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Your server is running on Port: ' + port + '. Welcome from Tapan and Szymon!')
+    res.write('Your server is running on Port: ' + port + '. Welcome from Tapan and Szymon!')
+    res.end()
   })
 
 server.listen(port, () => console.log('Your server is running on Port ' + port))
