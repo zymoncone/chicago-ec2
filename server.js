@@ -96,7 +96,7 @@ app.post('/completitions', async (req, res) => {
         })
     }
     try {
-        res.end("Here it is: " + OPENAI_API_KEY)
+        res.end(`Here it is: ${OPENAI_API_KEY}`)
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
         const data = await response.json()
         console.log(data)
