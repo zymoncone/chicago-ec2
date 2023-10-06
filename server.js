@@ -92,9 +92,7 @@ app.post('/completitions', async (req, res) => {
         },
         body: JSON.stringify({
             model: "gpt-3.5-turbo",
-            messages: [{role: "user", content: "What can I make with these ingredients? " + req.body.message + 
-                                                " Give me your top " + num_of_answers + 
-                                                " answers and keep it to only a few numbered bullets."}],
+            messages: [{role: "user", content: "Hello there, this is Tapan and Szymon"}],
             max_tokens: 200,
         })
     }
@@ -121,7 +119,7 @@ app.post('/passwords', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Your server is running on Port: ' + port)
+    res.send('Your server is running on Port: ' + port + '. Welcome from Tapan and Szymon!')
   })
 
 server.listen(port, () => console.log('Your server is running on Port ' + port))
