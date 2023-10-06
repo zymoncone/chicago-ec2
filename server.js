@@ -5,7 +5,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 var http = require('http')
-var debug = require('debug')('feelinghungryserver:server')
+var debug = require('debug')('chicagoec2:server')
 
 /**
  * Normalize a port into a number, string, or false.
@@ -77,52 +77,52 @@ app.set('port', port)
  */
 var server = http.createServer(app)
 
-// define constants
-const OPENAI_API_KEY = process.env.API_KEY
-const PASSWORD = process.env.PASSWORD
-const num_of_answers = 3
+// // define constants
+// const OPENAI_API_KEY = process.env.API_KEY
+// const PASSWORD = process.env.PASSWORD
+// const num_of_answers = 3
 
-// POST request to OpenAI
-app.post('/completitions', async (req, res) => {
-    const options = {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${OPENAI_API_KEY}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{role: "user", content: "Hello there, this is Tapan and Szymon"}],
-            max_tokens: 200,
-        })
-    }
-    try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', options)
-        const data = await response.json()
-        // console.log(data)
-        res.send(data)
+// // POST request to OpenAI
+// app.post('/completitions', async (req, res) => {
+//     const options = {
+//         method: 'POST',
+//         headers: {
+//             'Authorization': `Bearer ${OPENAI_API_KEY}`,
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             model: "gpt-3.5-turbo",
+//             messages: [{role: "user", content: "Hello there, this is Tapan and Szymon"}],
+//             max_tokens: 200,
+//         })
+//     }
+//     try {
+//         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
+//         const data = await response.json()
+//         // console.log(data)
+//         res.send(data)
 
-    } catch (error) {
-        console.error(error)
-    }
-})
+//     } catch (error) {
+//         console.error(error)
+//     }
+// })
 
-// POST request to check password match
-app.post('/passwords', (req, res) => {
-    const allowEntry = (req.body.message === PASSWORD)
-    // console.log(req.body)
-    try {
-        res.send(allowEntry)
-    } catch (error) {
-        console.error(error)
-    }
-})
+// // POST request to check password match
+// app.post('/passwords', (req, res) => {
+//     const allowEntry = (req.body.message === PASSWORD)
+//     // console.log(req.body)
+//     try {
+//         res.send(allowEntry)
+//     } catch (error) {
+//         console.error(error)
+//     }
+// })
 
 app.get('/', (req, res) => {
     res.write('Your server is running on Port: ' + port + '. Welcome from Tapan and Szymon!')
     res.end()
   })
 
-server.listen(port, "172.31.32.145", () => console.log('Your server is running on Port ' + port))
-server.on('error', onError)
-server.on('listening', onListening)
+server.listen(port, () => console.log('Your server is running on Port ' + port))
+// server.on('error', onError)
+// server.on('listening', onListening)
