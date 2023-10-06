@@ -69,8 +69,7 @@ function onError(error) {
 /**
  * Get port from environment and store in Express.
 */
-var HOST = '3.17.63.205'
-var port = normalizePort(process.env.PORT || '80')
+var port = normalizePort(process.env.PORT || '8000')
 app.set('port', port)
 
 /**
@@ -119,11 +118,10 @@ var server = http.createServer(app)
 //     }
 // })
 
-app.get('/', (req, res) => {
-    res.write('Your server is running on Port: ' + port + '. Welcome from Tapan and Szymon!')
-    res.end()
+app.use((req, res) => {
+    res.end('Your server is running on Port: ' + port + '. Welcome from Tapan and Szymon!')
   })
 
-server.listen(port, HOST, () => console.log('Your server is running on Port ' + port))
+server.listen(port, () => console.log('Your server is running on Port ' + port))
 // server.on('error', onError)
 // server.on('listening', onListening)
