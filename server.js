@@ -78,8 +78,7 @@ app.set('port', port)
 var server = http.createServer(app)
 
 // define constants
-const OPENAI_API_KEY = process.env.API_KEY
-const PASSWORD = process.env.PASSWORD
+const OPENAI_API_KEY = API_KEY
 const num_of_answers = 3
 
 // POST request to OpenAI
@@ -102,17 +101,6 @@ app.post('/completitions', async (req, res) => {
         // console.log(data)
         res.send(data)
 
-    } catch (error) {
-        console.error(error)
-    }
-})
-
-// POST request to check password match
-app.post('/passwords', (req, res) => {
-    const allowEntry = (req.body.message === PASSWORD)
-    // console.log(req.body)
-    try {
-        res.send(allowEntry)
     } catch (error) {
         console.error(error)
     }
