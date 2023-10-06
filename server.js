@@ -92,7 +92,7 @@ app.post('/completitions', async (req, res) => {
         },
         body: JSON.stringify({
             model: "gpt-3.5-turbo",
-            messages: [{role: "user", content: "Hello there, this is Tapan and Szymon"}],
+            messages: [{role: "user", content: req.body.message}],
             max_tokens: 200,
         })
     }
