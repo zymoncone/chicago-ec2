@@ -16,7 +16,7 @@ const setAPIKEY = (val) => {
   API_KEY = val
 
   app.get("/api", (req, res) => {
-    res.send('API key has been set\t' + API_KEY)
+    res.send('API key has been set')
   })
 }
 
