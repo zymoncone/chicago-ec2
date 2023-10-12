@@ -11,8 +11,13 @@ const AWS = require('aws-sdk')
 var API_KEY
 
 const setAPIKEY = (val) => {
+  
   console.log('API key has been set')
   API_KEY = val
+
+  app.get("/api", (req, res) => {
+    res.send('API key has been set\t' + API_KEY)
+  })
 }
 
 // more on setting credentials here:
@@ -33,6 +38,9 @@ ssm.getParameter(params, (err, data) => {
     console.log(err, err.stack) // an error occurred
   } else {
     // console.log(response) // successful response
+    app.get("/aws", (req, res) => {
+      res.send('AWS SSM parameter retrieved')
+    })
     console.log("AWS SSM parameter retrieved")
     setAPIKEY(data.Parameter.Value)
   }    
@@ -137,10 +145,14 @@ app.post('/completitions', async (req, res) => {
     }
 })
 
-app.use((req, res) => {
-    res.end('Your server is running on Port: ' + port + '. Welcome from Tapan and Szymon!')
+app.get("/", (req, res) => {
+    res.send('Welcome from Tapan and Szymon!')
   })
 
-server.listen(port, () => console.log('Your server is running on Port ' + port))
+const logData = () => {
+  console.log('Your server is running on Port ' + port)
+}
+
+server.listen(port, logData)
 server.on('error', onError)
 server.on('listening', onListening)
