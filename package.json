@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start:backend": "nodemon server.js"
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.100.0",

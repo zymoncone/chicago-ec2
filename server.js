@@ -1,3 +1,4 @@
+/* import constants */
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
@@ -10,14 +11,12 @@ const AWS = require('aws-sdk')
 
 var API_KEY
 
-const setAPIKEY = (val) => {
-  
-  console.log('API key has been set')
+/* set API key and print status to /api */
+const setAPIKEY = (val) => {  
   API_KEY = val
 
-  app.get("/api", (req, res) => {
-    res.send('API key has been set')
-  })
+  console.log('API key has been set')
+  app.get("/api", (req, res) => {res.send('API key has been set')})
 }
 
 // more on setting credentials here:
@@ -33,22 +32,22 @@ var params = {
   WithDecryption: true
 }
 
+/* get API parameter from AWS SDK API */
 ssm.getParameter(params, (err, data) => {
   if (err) {
     console.log(err, err.stack) // an error occurred
-  } else {
-    // console.log(response) // successful response
     app.get("/aws", (req, res) => {
-      res.send('AWS SSM parameter retrieved')
+      res.send('Could not retrieve AWS SSM parameter. See error logs in console')
     })
+  } else {
+    /* successful response */
+    app.get("/aws", (req, res) => {res.send('AWS SSM parameter retrieved')})
     console.log("AWS SSM parameter retrieved")
     setAPIKEY(data.Parameter.Value)
   }    
 })
 
-/**
- * Normalize a port into a number, string, or false.
- */
+/* normalize a port into a number, string, or false */
 const normalizePort = (val) => {
     var port = parseInt(val, 10)
   
@@ -65,10 +64,7 @@ const normalizePort = (val) => {
     return false
   }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
+/* event listener for HTTP server "error" event */
 const onError = (error) => {
     if (error.syscall !== 'listen') {
       throw error
@@ -78,7 +74,7 @@ const onError = (error) => {
       ? 'Pipe ' + port
       : 'Port ' + port
   
-    // handle specific listen errors with friendly messages
+    /* handle specific listen errors with friendly messages */
     switch (error.code) {
       case 'EACCES':
         console.error(bind + ' requires elevated privileges')
@@ -93,10 +89,7 @@ const onError = (error) => {
     }
   }
   
-  /**
-   * Event listener for HTTP server "listening" event.
-   */
-  
+  /* event listener for HTTP server "listening" event. */
   const onListening = () => {
     var addr = server.address();
     var bind = typeof addr === 'string'
@@ -105,21 +98,17 @@ const onError = (error) => {
     debug('Listening on ' + bind)
   }
 
-/**
- * Get port from environment and store in Express.
-*/
+/* get port from environment and store in Express */
 var port = normalizePort(process.env.PORT || '8000')
 app.set('port', port)
 
-/**
- * Create HTTP server.
- */
+/* create HTTP server */
 var server = http.createServer(app)
 
-// define constants
+/* define constants */
 const num_of_answers = 3
 
-// POST request to OpenAI
+/* POST request to OpenAI */
 app.post('/completitions', async (req, res) => {
     const options = {
         method: 'POST',
@@ -134,7 +123,6 @@ app.post('/completitions', async (req, res) => {
         })
     }
     try {
-        console.log('We got the key! ' + API_KEY)
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
         const data = await response.json()
         console.log(data)
@@ -145,14 +133,12 @@ app.post('/completitions', async (req, res) => {
     }
 })
 
+/* display welcome message to show port is live */
 app.get("/", (req, res) => {
     res.send('Welcome from Tapan and Szymon!')
   })
 
-const logData = () => {
-  console.log('Your server is running on Port ' + port)
-}
-
-server.listen(port, logData)
+/* server listen */
+server.listen(port, () => {console.log('Your server is running on Port ' + port)})
 server.on('error', onError)
 server.on('listening', onListening)
