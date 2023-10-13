@@ -120,6 +120,8 @@ app.post('/completitions', async (req, res) => {
             model: "gpt-3.5-turbo",
             messages: [{role: "user", content: req.body.message}],
             max_tokens: 200,
+            user: "Szymon",
+            temperature: 0.8
         })
     }
     try {
