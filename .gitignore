@@ -1,3 +1,4 @@
 /node_modules
 .env
 Server Key.pem
+pantry-items.json

@@ -7,6 +7,7 @@ app.use(express.json())
 app.use(cors())
 var http = require('http')
 var debug = require('debug')('chicagoec2:server')
+const fetchFile = require('./public/javascripts/fetchFile')
 const AWS = require('aws-sdk')
 
 var API_KEY
@@ -105,9 +106,6 @@ app.set('port', port)
 /* create HTTP server */
 var server = http.createServer(app)
 
-/* define constants */
-const num_of_answers = 3
-
 /* POST request to OpenAI */
 app.post('/completitions', async (req, res) => {
     const options = {
@@ -139,6 +137,29 @@ app.post('/completitions', async (req, res) => {
 app.get("/", (req, res) => {
     res.send('Welcome from Tapan and Szymon!')
   })
+
+/* POST from S3 bucket */
+app.post("/S3", async (req, res) => {
+  if (req.body.message === "fetch") {
+    try {
+      const response = await fetchFile.getFileFromS3()
+      console.log('Output:', JSON.parse(response.Body))
+      res.send(JSON.parse(response.Body))
+    } catch (error) {
+      res.send(error.message)
+    }
+  }
+
+  if (req.body.message === "push") {
+    try {
+      const update = await fetchFile.pushFileToS3(req.body.file)
+      res.send(JSON.parse(update.Body))
+    } catch (error) {
+      res.send(error.message)
+    }
+  }
+  
+})
 
 /* server listen */
 server.listen(port, () => {console.log('Your server is running on Port ' + port)})
