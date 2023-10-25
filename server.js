@@ -107,7 +107,7 @@ app.set('port', port)
 var server = http.createServer(app)
 
 /* POST request to OpenAI */
-app.post('/completitions', async (req, res) => {
+app.post('/completions', async (req, res) => {
     const options = {
         method: 'POST',
         headers: {
@@ -117,9 +117,9 @@ app.post('/completitions', async (req, res) => {
         body: JSON.stringify({
             model: "gpt-3.5-turbo",
             messages: [{role: "user", content: req.body.message}],
-            max_tokens: 200,
+            max_tokens: 400,
             user: "Szymon",
-            temperature: 0.8
+            temperature: 0.2
         })
     }
     try {
